@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply bg-base-100 text-base-content min-h-screen;
+}
+
 .custom-card-image .card.image-full:before {
     border-radius: 0.5rem;
     opacity: 0.45;
+}
+
+h1, h2, h3 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.starfield {
+    background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 90px 15px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1.5px 1.5px at 150px 60px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 200px 20px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 260px 45px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1.5px 1.5px at 320px 10px, rgba(255, 255, 255, 0.9), transparent);
+    background-repeat: repeat-x;
+    background-size: 340px 80px;
 }

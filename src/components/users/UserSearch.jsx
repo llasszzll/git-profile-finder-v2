@@ -38,14 +38,14 @@ function UserSearch() {
     <div>
         <form onSubmit={handleSubmit}>
             <div className='form-control'>
-                <div className='relative'>
+                <div className='flex flex-col gap-2 sm:relative sm:block sm:gap-0'>
                     <label htmlFor='search-users' className='sr-only'>Search GitHub users</label>
-                    <input id='search-users' type='text' className="w-full pr-40 bg-gray-200 input input-lg text-black"
+                    <input id='search-users' type='text' className="w-full sm:pr-40 bg-base-200 input input-lg text-base-content"
                         placeholder='Search'
                         value={text}
                         onChange={handleChange}>
                     </input>
-                    <button type='submit' className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg">Go</button>
+                    <button type='submit' className="w-full sm:absolute sm:top-0 sm:right-0 sm:w-36 sm:rounded-l-none btn btn-lg">Go</button>
                 </div>
             </div>
         </form>

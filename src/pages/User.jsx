@@ -113,7 +113,7 @@ function User() {
               </div>
             </div>
 
-            <div className="w-full rounded-lg shadow-md bg-base-100 stats">
+            <div className="w-full rounded-lg shadow-md bg-base-200 stats stats-vertical sm:stats-horizontal">
               {location && (
                 <div className="stat">
                   <div className="stat-title text-md">Location</div>
@@ -123,7 +123,7 @@ function User() {
               {blog && (
                 <div className="stat">
                   <div className="stat-title text-md">Website</div>
-                  <div className="text lg stat-value">
+                  <div className="text lg stat-value break-all whitespace-normal">
                     <a
                       href={`https://${blog}`}
                       target="_blank"
@@ -138,7 +138,7 @@ function User() {
               {twitter_username && (
                 <div className="stat">
                   <div className="stat-title text-md">Twitter</div>
-                  <div className="text lg stat-value">
+                  <div className="text lg stat-value break-all whitespace-normal">
                     <a
                       href={`https://twitter.com/${twitter_username}`}
                       target="_blank"
@@ -154,7 +154,7 @@ function User() {
           </div>
         </div>
 
-        <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
+        <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-200 stats stats-vertical sm:stats-horizontal">
           <div className="stat">
             <div className="stat-figure text-secondary">
               <FaUsers className="text-3xl md:text-5xl" />
