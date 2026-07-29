@@ -6,12 +6,13 @@ function Alert() {
     const {alert} =useContext(AlertContext)
 
   return alert !== null &&(
-      <p className="flex items-start mb-4 space-x-2">
+      <p className="flex items-start mb-4 space-x-2" role="alert" aria-live="assertive">
           {alert.type === 'error' && (
               <svg
               fill='none'
               viewBox='0 0 24 24'
               className='w-6 h-6 stroke-current mr-3'
+              aria-hidden="true"
             >
               <path
                 strokeLinecap='round'

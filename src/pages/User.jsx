@@ -1,26 +1,36 @@
 import React from "react";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Spinner from "../components/layout/Spinner";
 import RepoList from "../components/repos/RepoList";
 import { useParams } from "react-router-dom";
 import GithubContext from "../context/github/GithubContext";
+import AlertContext from "../context/alert/AlertContext";
 import {getUserAndRepos} from '../context/github/GithubActions'
 
 function User() {
   const { user, loading, repos, dispatch } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
+  const [notFound, setNotFound] = useState(false);
 
   const params = useParams();
 
   useEffect(() => {
     dispatch ({type: 'SET_LOADING'})
+    setNotFound(false)
     const getUserData = async() => {
-      const userData = await getUserAndRepos (params.login)
-      dispatch({type: 'GET_USER_AND_REPOS', payload: userData})
-
+      try {
+        const userData = await getUserAndRepos (params.login)
+        dispatch({type: 'GET_USER_AND_REPOS', payload: userData})
+      } catch (err) {
+        dispatch({type: 'GET_USER_AND_REPOS', payload: { user: {}, repos: [] }})
+        setNotFound(true)
+        setAlert(`Couldn't load a profile for "${params.login}".`, 'error')
+      }
     }
     getUserData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params.login]);
 
   const {
@@ -44,6 +54,20 @@ function User() {
     return <Spinner />;
   }
 
+  if (notFound) {
+    return (
+      <div className="w-full mx-auto lg:w-10/12">
+        <div className="mb-4">
+          <Link to="/" className="btn btn-ghost">
+            Back to Search
+          </Link>
+        </div>
+        <h1 className="text-3xl">Profile not found</h1>
+        <p>We couldn't find a GitHub profile for "{params.login}".</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="w-full mx-auto lg:w-10/12">
@@ -57,10 +81,10 @@ function User() {
           <div className="custom-card-image mb-6 md:mb-0">
             <div className="rounded-lg shadow-xl card image-full">
               <figure>
-                <img src={avatar_url} alt="" />
+                <img src={avatar_url} alt={`${login}'s avatar`} />
               </figure>
               <div className="card-body justify-end">
-                <h2 className="card-title mb-0">{name}</h2>
+                <p className="card-title mb-0" aria-hidden="true">{name}</p>
                 <p>{login}</p>
               </div>
             </div>
@@ -84,6 +108,7 @@ function User() {
                   className="btn btn-outline"
                 >
                   Visit Github Profile
+                  <span className="sr-only"> (opens in new tab)</span>
                 </a>
               </div>
             </div>
@@ -105,6 +130,7 @@ function User() {
                       rel="noreferrer"
                     >
                       {blog}
+                      <span className="sr-only"> (opens in new tab)</span>
                     </a>
                   </div>
                 </div>
@@ -119,6 +145,7 @@ function User() {
                       rel="noreferrer"
                     >
                       {twitter_username}
+                      <span className="sr-only"> (opens in new tab)</span>
                     </a>
                   </div>
                 </div>

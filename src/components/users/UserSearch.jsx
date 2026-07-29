@@ -17,11 +17,16 @@ function UserSearch() {
         e.preventDefault()
 
         if (text === '') {
-            setAlert('Please enter something', 'error')  
+            setAlert('Please enter something', 'error')
         } else {
             dispatch ({type: 'SET_LOADING'})
-            const users = await searchUsers(text)
-            dispatch ({type: 'GET_USERS', payload: users})
+            try {
+                const users = await searchUsers(text)
+                dispatch ({type: 'GET_USERS', payload: users})
+            } catch (err) {
+                dispatch ({type: 'GET_USERS', payload: []})
+                setAlert('Something went wrong searching GitHub. Please try again.', 'error')
+            }
 
             setText('')
         }
@@ -34,7 +39,8 @@ function UserSearch() {
         <form onSubmit={handleSubmit}>
             <div className='form-control'>
                 <div className='relative'>
-                    <input type='text' className="w-full pr-40 bg-gray-200 input input-lg text-black"
+                    <label htmlFor='search-users' className='sr-only'>Search GitHub users</label>
+                    <input id='search-users' type='text' className="w-full pr-40 bg-gray-200 input input-lg text-black"
                         placeholder='Search'
                         value={text}
                         onChange={handleChange}>
